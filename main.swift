@@ -90,6 +90,14 @@ extension MyList {
                 return tail.length() + 1
         }
     } // length
+    func sum(zero: A, add: (A,A) -> A) -> A {
+        switch self {
+            case .empty:
+                return zero
+            case .cons(let head, let tail):
+                return add(zero, head)
+        }
+    } // sum
 
 } // extension MyList
 
