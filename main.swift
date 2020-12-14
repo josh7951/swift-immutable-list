@@ -102,8 +102,14 @@ extension MyList {
         switch self {
             case .empty:
                 return self
-            case .cons:
-                return self
+            case .cons(let head, let tail):
+                let fil = tail.filter(predicate: predicate)
+                /*if predicate(head) {
+                    return .cons(head, fil)
+                } else {
+                    return fil
+                } */
+                return predicate(head) ? .cons(head, fil) : fil      
         }
     } // filter
     func sum(zero: A, add: (A,A) -> A) -> A {
@@ -760,4 +766,3 @@ func runTests() {
 // ---BEGIN MAIN---
 runTests()
 // ---END MAIN---
-
