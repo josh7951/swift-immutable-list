@@ -98,6 +98,14 @@ extension MyList {
                 return tail.length() + 1
         }
     } // length
+    func filter(predicate: (A) -> Bool) -> MyList<A> {
+        switch self {
+            case .empty:
+                return self
+            case .cons:
+                return self
+        }
+    } // filter
     func sum(zero: A, add: (A,A) -> A) -> A {
         switch self {
             case .empty:
@@ -370,7 +378,7 @@ func test_map_cons_3_strings() {
                  received: list1.map(mapper: { i in i.description }))
 } // test_map_cons_3_strings
 
-/* func test_filter_empty_integers() {
+func test_filter_empty_integers() {
     let list1: MyList<Int> = MyList.empty
     assertEquals(testName: "test_filter_empty_integers",
                  expected: MyList.empty,
@@ -438,7 +446,7 @@ func test_filter_cons_4_strings() {
     assertEquals(testName: "test_filter_cons_4_strings",
                  expected: MyList.cons("foobar", MyList.cons("apple", MyList.empty)),
                  received: list1.filter(predicate: { s in s.count > 3 }))
-} // test_filter_cons_4_strings */
+} // test_filter_cons_4_strings
 
 func test_toString_empty_integers() {
     let list1: MyList<Int> = MyList.empty
@@ -696,7 +704,7 @@ func runTests() {
     test_map_cons_2_strings()
     test_map_cons_3_strings()
 
-    /* // filter
+    // filter
     test_filter_empty_integers()
     test_filter_empty_strings()
     test_filter_cons_1_integers()
@@ -706,7 +714,7 @@ func runTests() {
     test_filter_cons_1_strings()
     test_filter_cons_2_strings()
     test_filter_cons_3_strings()
-    test_filter_cons_4_strings() */
+    test_filter_cons_4_strings()
 
     // toString
     test_toString_empty_integers()
