@@ -82,6 +82,14 @@ extension MyList {
                 return false
         }
     } // empty
+    func append(other: MyList<A>) -> MyList<A> {
+        switch self {
+            case .empty:
+                return other
+            case .cons:
+                return self
+        }
+    } // append
     func length() -> Int {
         switch self {
             case .empty:
@@ -95,9 +103,17 @@ extension MyList {
             case .empty:
                 return zero
             case .cons(let head, let tail):
-                return add(zero, head)
+                return add(head, tail.sum(zero: zero, add: add))
         }
     } // sum
+    func contains(target: A, compare:((A,A) -> Bool)) -> Bool {
+        switch self {
+            case .empty:
+                return false
+            case .cons(let head, let tail):
+                return compare(target, head) || tail.contains(target: target, compare: compare)
+        }
+    } // contains
 
 } // extension MyList
 
@@ -354,7 +370,7 @@ func test_map_cons_3_strings() {
                  received: list1.map(mapper: { i in i.description }))
 } // test_map_cons_3_strings
 
-func test_filter_empty_integers() {
+/* func test_filter_empty_integers() {
     let list1: MyList<Int> = MyList.empty
     assertEquals(testName: "test_filter_empty_integers",
                  expected: MyList.empty,
@@ -422,7 +438,7 @@ func test_filter_cons_4_strings() {
     assertEquals(testName: "test_filter_cons_4_strings",
                  expected: MyList.cons("foobar", MyList.cons("apple", MyList.empty)),
                  received: list1.filter(predicate: { s in s.count > 3 }))
-} // test_filter_cons_4_strings
+} // test_filter_cons_4_strings */
 
 func test_toString_empty_integers() {
     let list1: MyList<Int> = MyList.empty
@@ -680,7 +696,7 @@ func runTests() {
     test_map_cons_2_strings()
     test_map_cons_3_strings()
 
-    // filter
+    /* // filter
     test_filter_empty_integers()
     test_filter_empty_strings()
     test_filter_cons_1_integers()
@@ -690,7 +706,7 @@ func runTests() {
     test_filter_cons_1_strings()
     test_filter_cons_2_strings()
     test_filter_cons_3_strings()
-    test_filter_cons_4_strings()
+    test_filter_cons_4_strings() */
 
     // toString
     test_toString_empty_integers()
@@ -702,7 +718,7 @@ func runTests() {
     test_toString_cons_2_strings()
     test_toString_cons_3_strings()
 
-    // contains
+   // contains
     test_contains_empty_integers()
     test_contains_empty_strings()
     test_contains_cons_1_integers_1()
