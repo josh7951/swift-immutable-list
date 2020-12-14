@@ -86,8 +86,8 @@ extension MyList {
         switch self {
             case .empty:
                 return other
-            case .cons:
-                return self
+            case .cons(let head, let tail):
+                return .cons(head, tail.append(other: other))
         }
     } // append
     func length() -> Int {
